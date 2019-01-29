@@ -1,0 +1,38 @@
+directive @auth on FIELD_DEFINITION
+
+# Entity types
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}
+
+# Resolver types
+
+type Query {
+  me: User @auth
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput): User
+  authenticate(authenticateInput: AuthenticateInput): AuthPayload
+}
+
+# Custom types
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input AuthenticateInput {
+  email: String!
+  password: String!
+}
+
+type AuthPayload {
+  user: User!
+  token: String!
+}
